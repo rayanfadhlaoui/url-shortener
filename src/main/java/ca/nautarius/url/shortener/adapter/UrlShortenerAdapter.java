@@ -1,5 +1,9 @@
 package ca.nautarius.url.shortener.adapter;
 
+import ca.nautarius.url.shortener.model.ShortenedUrlEntity;
+
 public interface UrlShortenerAdapter {
-    Integer getCount(String key);
+
+    ShortenedUrlEntity save(ShortenedUrlEntity shortenedUrlEntity);
+
 }

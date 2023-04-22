@@ -1,6 +1,9 @@
 package ca.nautarius.url.shortener.service;
 
 import ca.nautarius.url.shortener.model.UrlEntity;
+import ca.nautarius.url.shortener.service.ShortenedUrlCreatorService;
+import ca.nautarius.url.shortener.service.ShortenedUrlSaverService;
+import ca.nautarius.url.shortener.service.UrlShortenerService;
 import ca.nautarius.url.shortener.stringifier.UrlStringifier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

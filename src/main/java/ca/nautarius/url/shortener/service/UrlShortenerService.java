@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-class UrlShortenerService {
+public class UrlShortenerService {
     private final ShortenedUrlCreatorService shortenedUrlCreatorService;
     private final ShortenedUrlSaverService urlSaverService;
     private final UrlStringifier urlStringifier;

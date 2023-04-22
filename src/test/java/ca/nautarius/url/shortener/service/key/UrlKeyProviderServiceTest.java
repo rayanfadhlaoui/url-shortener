@@ -1,6 +1,8 @@
-package ca.nautarius.url.shortener.service;
+package ca.nautarius.url.shortener.service.key;
 
 import ca.nautarius.url.shortener.adapter.UrlShortenerAdapter;
+import ca.nautarius.url.shortener.service.key.KeyGeneratorService;
+import ca.nautarius.url.shortener.service.key.UrlKeyProviderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

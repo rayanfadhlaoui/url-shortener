@@ -1,4 +1,4 @@
-package ca.nautarius.url.shortener.service;
+package ca.nautarius.url.shortener.service.key;
 
 import ca.nautarius.url.shortener.adapter.UrlShortenerAdapter;
 import lombok.AllArgsConstructor;

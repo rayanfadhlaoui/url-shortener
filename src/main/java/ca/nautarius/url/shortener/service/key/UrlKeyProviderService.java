@@ -14,8 +14,8 @@ public class UrlKeyProviderService {
 
     private final KeyGeneratorService keyGeneratorService;
 
-    public BigInteger get(String originalPath) {
-        return urlShortenerAdapter.findByPath(originalPath)
-                .orElseGet(keyGeneratorService::getNextAndIncrement);
+    public BigInteger get(String domain, String originalPath) {
+        return urlShortenerAdapter.findByDomainAndPath(domain, originalPath)
+                .orElseGet(() -> keyGeneratorService.getNextAndIncrement(domain));
     }
 }

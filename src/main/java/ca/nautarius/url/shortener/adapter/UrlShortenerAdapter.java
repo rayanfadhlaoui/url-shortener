@@ -9,5 +9,5 @@ public interface UrlShortenerAdapter {
 
     ShortenedUrlEntity save(ShortenedUrlEntity shortenedUrlEntity);
 
-    Optional<BigInteger> findByPath(String path);
+    Optional<BigInteger> findByDomainAndPath(String domain, String path);
 }

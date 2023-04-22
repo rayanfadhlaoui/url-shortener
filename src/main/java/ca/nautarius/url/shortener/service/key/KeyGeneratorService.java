@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 @Service
 public class KeyGeneratorService {
-    public BigInteger getNextAndIncrement() {
+    public BigInteger getNextAndIncrement(String domain) {
         return null;
     }
 }

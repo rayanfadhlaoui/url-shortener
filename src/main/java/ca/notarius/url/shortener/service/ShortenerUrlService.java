@@ -9,7 +9,7 @@ import java.net.URL;
 
 @Service
 @AllArgsConstructor
-public class UrlShortenerService {
+public class ShortenerUrlService {
     private final ShortenedUrlCreatorService shortenedUrlCreatorService;
     private final UrlShortenerAdapter urlShortenerAdapter;
     private final UrlStringifier urlStringifier;

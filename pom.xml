@@ -126,15 +126,23 @@
                         </goals>
                         <phase>test</phase>
                         <configuration>
+                            <mutators>ALL</mutators>
                             <mutationThreshold>100</mutationThreshold>
                             <targetClasses>
                                 <param>${base-package}.*</param>
                                 <param>!${base-package}.Application.*</param>
-                                <param>!${base-package}.*JpaTest.*</param>
                             </targetClasses>
                             <targetTests>
+                                <param>!${base-package}.Application.*</param>
                                 <param>${base-package}.*</param>
                             </targetTests>
+                            <avoidCallsTo>
+                                <avoidCallsTo>java.util.logging</avoidCallsTo>
+                                <avoidCallsTo>org.apache.log4j</avoidCallsTo>
+                                <avoidCallsTo>org.slf4j</avoidCallsTo>
+                                <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
+                                <avoidCallsTo>org.springframework.boot.SpringApplication</avoidCallsTo>
+                            </avoidCallsTo>
                         </configuration>
                     </execution>
                 </executions>

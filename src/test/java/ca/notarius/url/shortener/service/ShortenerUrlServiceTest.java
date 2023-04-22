@@ -16,12 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class UrlShortenerServiceTest {
+class ShortenerUrlServiceTest {
     private static final String EXPECTED_SHORTENED_URL = "https://www.notarius.com/1";
     private static final String ORIGINAL_URL = "https://www.notarius.com/career";
 
     @InjectMocks
-    private UrlShortenerService urlShortenerService;
+    private ShortenerUrlService shortenerUrlService;
     @Mock
     private ShortenedUrlCreatorService shortenedUrlCreatorService;
     @Mock
@@ -40,7 +40,7 @@ class UrlShortenerServiceTest {
         given(shortenedUrlCreatorService.create(originalUrl)).willReturn(shortenedUrlEntity);
         given(urlShortenerAdapter.save(shortenedUrlEntity)).willReturn(newShortenedUrlEntity);
         given(urlStringifier.getShortUrl(newShortenedUrlEntity)).willReturn(EXPECTED_SHORTENED_URL);
-        String actualUrl = urlShortenerService.createAndSaveUrl(originalUrl);
+        String actualUrl = shortenerUrlService.createAndSaveUrl(originalUrl);
         assertThat(actualUrl).isEqualTo(EXPECTED_SHORTENED_URL);
     }
 }

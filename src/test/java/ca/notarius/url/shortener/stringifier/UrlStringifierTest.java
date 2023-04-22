@@ -20,18 +20,18 @@ class UrlStringifierTest {
 
     @Test
     void stringify() {
-        var urlEntity = createUrlEntity();
+        var urlEntity = createShortenedUrlEntity();
         String shortUrl = urlStringifier.getShortUrl(urlEntity);
         assertThat(shortUrl).isEqualTo("https://www.notarius.com/9999999999");
     }
 
-    private static UrlEntity createUrlEntity() {
-        var urlEntity = new UrlEntity();
+    private ShortenedUrlEntity createShortenedUrlEntity() {
         var shortenedUrlEntity = new ShortenedUrlEntity();
+        var urlEntity = new UrlEntity();
+        urlEntity.setValue(ROOT);
         shortenedUrlEntity.setId(BigInteger.valueOf(9999999999L));
-        urlEntity.setRoot(ROOT);
-        urlEntity.setShortenedUrl(shortenedUrlEntity);
-        return urlEntity;
+        shortenedUrlEntity.setRoot(urlEntity);
+        return shortenedUrlEntity;
     }
 
 }

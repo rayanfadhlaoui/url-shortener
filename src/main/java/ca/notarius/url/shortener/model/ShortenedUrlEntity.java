@@ -11,5 +11,6 @@ public class ShortenedUrlEntity {
 
     private BigInteger id;
     private String originalPath;
+    private UrlEntity root;
 
 }

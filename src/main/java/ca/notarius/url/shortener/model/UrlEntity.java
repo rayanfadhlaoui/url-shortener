@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class UrlEntity {
 
-    private String root;
-    private ShortenedUrlEntity shortenedUrl;
+    private String value;
 }

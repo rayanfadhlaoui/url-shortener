@@ -31,12 +31,12 @@ class ShortenedUrlCreatorServiceTest {
         BigInteger nextKey = BigInteger.valueOf(156);
         given(urlKeyProviderService.get(DOMAIN, CAREER_PATH)).willReturn(nextKey);
 
-        var urlEntity = shortenedUrlCreatorService.create(new URL(ORIGINAL_URL));
+        var shortenedUrlEntity = shortenedUrlCreatorService.create(new URL(ORIGINAL_URL));
 
-        assertThat(urlEntity.getRoot()).isEqualTo(DOMAIN);
+        var root = shortenedUrlEntity.getRoot();
+        assertThat(root.getValue()).isEqualTo(DOMAIN);
 
-        var shortenedUrl = urlEntity.getShortenedUrl();
-        assertThat(shortenedUrl.getOriginalPath()).isEqualTo(CAREER_PATH);
-        assertThat(shortenedUrl.getId()).isEqualTo(nextKey);
+        assertThat(shortenedUrlEntity.getOriginalPath()).isEqualTo(CAREER_PATH);
+        assertThat(shortenedUrlEntity.getId()).isEqualTo(nextKey);
     }
 }

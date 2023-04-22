@@ -17,24 +17,23 @@ public class ShortenedUrlCreatorService {
 
     private final UrlKeyProviderService urlKeyProviderService;
 
-    public UrlEntity create(URL url) {
+    public ShortenedUrlEntity create(URL url) {
         String domain = url.getProtocol() + PROTOCOL_SEPARATOR + url.getHost();
         BigInteger nextKey = urlKeyProviderService.get(domain, url.getPath());
-        return createUrlEntity(url, domain, nextKey);
+        return createShortenedUrlEntity(url, domain, nextKey);
     }
 
-    private UrlEntity createUrlEntity(URL url, String domain, BigInteger nextKey) {
-        var urlEntity = new UrlEntity();
-        var shortenedUrlEntity = createShortenedUrlEntity(url, nextKey);
-        urlEntity.setRoot(domain);
-        urlEntity.setShortenedUrl(shortenedUrlEntity);
-        return urlEntity;
-    }
-
-    private ShortenedUrlEntity createShortenedUrlEntity(URL url, BigInteger nextKey) {
+    private ShortenedUrlEntity createShortenedUrlEntity(URL url, String domain, BigInteger nextKey) {
         ShortenedUrlEntity shortenedUrlEntity = new ShortenedUrlEntity();
         shortenedUrlEntity.setOriginalPath(url.getPath());
+        shortenedUrlEntity.setRoot(createUrlEntity(domain));
         shortenedUrlEntity.setId(nextKey);
         return shortenedUrlEntity;
+    }
+
+    private UrlEntity createUrlEntity(String domain) {
+        var urlEntity = new UrlEntity();
+        urlEntity.setValue(domain);
+        return urlEntity;
     }
 }

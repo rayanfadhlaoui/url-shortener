@@ -1,7 +1,7 @@
 package ca.notarius.url.shortener.service;
 
 import ca.notarius.url.shortener.adapter.UrlShortenerAdapter;
-import ca.notarius.url.shortener.model.UrlEntity;
+import ca.notarius.url.shortener.model.ShortenedUrlEntity;
 import ca.notarius.url.shortener.stringifier.UrlStringifier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,16 +30,16 @@ class UrlShortenerServiceTest {
     private UrlStringifier urlStringifier;
 
     @Mock
-    private UrlEntity urlEntity;
+    private ShortenedUrlEntity shortenedUrlEntity;
     @Mock
-    private UrlEntity newUrlEntity;
+    private ShortenedUrlEntity newShortenedUrlEntity;
 
     @Test
     void createAndSaveUrl() throws MalformedURLException {
         URL originalUrl = new URL(ORIGINAL_URL);
-        given(shortenedUrlCreatorService.create(originalUrl)).willReturn(urlEntity);
-        given(urlShortenerAdapter.save(urlEntity)).willReturn(newUrlEntity);
-        given(urlStringifier.getShortUrl(newUrlEntity)).willReturn(EXPECTED_SHORTENED_URL);
+        given(shortenedUrlCreatorService.create(originalUrl)).willReturn(shortenedUrlEntity);
+        given(urlShortenerAdapter.save(shortenedUrlEntity)).willReturn(newShortenedUrlEntity);
+        given(urlStringifier.getShortUrl(newShortenedUrlEntity)).willReturn(EXPECTED_SHORTENED_URL);
         String actualUrl = urlShortenerService.createAndSaveUrl(originalUrl);
         assertThat(actualUrl).isEqualTo(EXPECTED_SHORTENED_URL);
     }

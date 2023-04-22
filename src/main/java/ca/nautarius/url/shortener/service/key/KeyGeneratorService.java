@@ -4,6 +4,7 @@ import ca.nautarius.url.shortener.adapter.KeyGeneratorAdapter;
 import ca.nautarius.url.shortener.exceptions.KeysExceedsAcceptedSizeException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 
@@ -15,6 +16,7 @@ public class KeyGeneratorService {
 
     private KeyGeneratorAdapter keyGeneratorAdapter;
 
+    @Transactional
     public BigInteger getNextAndIncrement(String domain) {
         BigInteger currentKey = keyGeneratorAdapter.getCurrent(domain)
                 .orElse(BigInteger.ONE);

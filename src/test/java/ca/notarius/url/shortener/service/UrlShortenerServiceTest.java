@@ -8,6 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -31,11 +34,12 @@ class UrlShortenerServiceTest {
     private UrlEntity newUrlEntity;
 
     @Test
-    void createAndSaveUrl() {
-        given(shortenedUrlCreatorService.create(ORIGINAL_URL)).willReturn(urlEntity);
+    void createAndSaveUrl() throws MalformedURLException {
+        URL originalUrl = new URL(ORIGINAL_URL);
+        given(shortenedUrlCreatorService.create(originalUrl)).willReturn(urlEntity);
         given(shortenedUrlSaverService.save(urlEntity)).willReturn(newUrlEntity);
         given(urlStringifier.getShortUrl(newUrlEntity)).willReturn(EXPECTED_SHORTENED_URL);
-        String actualUrl = urlShortenerService.createAndSaveUrl(ORIGINAL_URL);
+        String actualUrl = urlShortenerService.createAndSaveUrl(originalUrl);
         assertThat(actualUrl).isEqualTo(EXPECTED_SHORTENED_URL);
     }
 }

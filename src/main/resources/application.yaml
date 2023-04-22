@@ -1,7 +1,8 @@
+#this need to change when switching to a real database
 spring:
   datasource:
-    url: ${DATABASE_URL}
-    driverClassName: org.postgresql.Driver
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD}
-  jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa.database-platform: org.hibernate.dialect.H2Dialect

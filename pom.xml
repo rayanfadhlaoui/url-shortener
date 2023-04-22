@@ -5,12 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>nautarius</artifactId>
+    <artifactId>notarius</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
+        <base-package>ca.notarius.url.shortener</base-package>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- main -->
@@ -18,13 +19,15 @@
         <spring-boot-dependencies.version>3.0.5</spring-boot-dependencies.version>
 
         <!-- test -->
-        <junit-jupiter.version>5.3.1</junit-jupiter.version>
+        <junit-jupiter.version>5.9.2</junit-jupiter.version>
         <assertj-core.version>3.11.1</assertj-core.version>
         <mockito-core.version>2.21.0</mockito-core.version>
         <h2.version>2.1.214</h2.version>
 
         <!-- plugin -->
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <pitest-junit5-plugin.version>1.1.1</pitest-junit5-plugin.version>
+        <pitest-parent.version>1.12.0</pitest-parent.version>
     </properties>
 
     <dependencyManagement>
@@ -57,12 +60,6 @@
         <!-- test-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter.version}</version>
             <scope>test</scope>
@@ -89,7 +86,20 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
+            <!-- scope is set to runtime because there is no real database-->
+            <!-- <scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-parent</artifactId>
+            <version>${pitest-parent.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>${pitest-junit5-plugin.version}</version>
         </dependency>
     </dependencies>
 
@@ -99,6 +109,30 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-parent.version}</version>
+                <executions>
+                    <execution>
+                        <id>pitest</id>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <mutationThreshold>100</mutationThreshold>
+                            <targetClasses>
+                                <param>${base-package}.*</param>
+                                <param>!${base-package}.Application.*</param>
+                            </targetClasses>
+                            <targetTests>
+                                <param>${base-package}.*</param>
+                            </targetTests>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

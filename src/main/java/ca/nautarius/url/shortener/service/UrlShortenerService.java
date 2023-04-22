@@ -1,6 +1,5 @@
 package ca.nautarius.url.shortener.service;
 
-import ca.nautarius.url.shortener.model.ShortenedUrlEntity;
 import ca.nautarius.url.shortener.stringifier.UrlStringifier;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

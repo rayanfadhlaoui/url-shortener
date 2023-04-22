@@ -18,7 +18,7 @@ public class ShortenedUrlEntity {
     @Column(name = "original_path")
     private String originalPath;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "root_id", referencedColumnName = "id")
     private UrlEntity root;
 

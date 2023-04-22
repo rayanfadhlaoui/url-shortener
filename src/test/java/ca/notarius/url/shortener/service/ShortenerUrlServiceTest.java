@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -40,7 +41,17 @@ class ShortenerUrlServiceTest {
         given(shortenedUrlCreatorService.create(originalUrl)).willReturn(shortenedUrlEntity);
         given(urlShortenerAdapter.save(shortenedUrlEntity)).willReturn(newShortenedUrlEntity);
         given(urlStringifier.getShortUrl(newShortenedUrlEntity)).willReturn(EXPECTED_SHORTENED_URL);
+
         String actualUrl = shortenerUrlService.createAndSaveUrl(originalUrl);
+
         assertThat(actualUrl).isEqualTo(EXPECTED_SHORTENED_URL);
+    }
+
+    @Test
+    void getFullUrl() {
+        //todo Not yet implemented
+        Optional<String> actualUrl = shortenerUrlService.getFullUrl(null, null);
+
+        assertThat(actualUrl).isNull();
     }
 }

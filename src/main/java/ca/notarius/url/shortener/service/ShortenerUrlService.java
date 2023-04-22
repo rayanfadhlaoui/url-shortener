@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.net.URL;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,5 +19,9 @@ public class ShortenerUrlService {
         var urlEntity = shortenedUrlCreatorService.create(url);
         var newUrlEntity = urlShortenerAdapter.save(urlEntity);
         return urlStringifier.getShortUrl(newUrlEntity);
+    }
+
+    public Optional<String> getFullUrl(String domain, String key) {
+        return null;
     }
 }

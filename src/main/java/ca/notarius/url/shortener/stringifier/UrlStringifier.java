@@ -9,6 +9,6 @@ public class UrlStringifier {
     private static final String DOMAIN_SEPARATOR = "/";
 
     public String getShortUrl(ShortenedUrlEntity shortenedUrlEntity) {
-        return shortenedUrlEntity.getRoot().getValue() + DOMAIN_SEPARATOR + shortenedUrlEntity.getId();
+        return shortenedUrlEntity.getRoot().getRootValue() + DOMAIN_SEPARATOR + shortenedUrlEntity.getId();
     }
 }

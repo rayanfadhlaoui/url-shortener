@@ -33,7 +33,7 @@ public class ShortenedUrlCreatorService {
 
     private UrlEntity createUrlEntity(String domain) {
         var urlEntity = new UrlEntity();
-        urlEntity.setValue(domain);
+        urlEntity.setRootValue(domain);
         return urlEntity;
     }
 }

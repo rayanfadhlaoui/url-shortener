@@ -28,7 +28,7 @@ class UrlStringifierTest {
     private ShortenedUrlEntity createShortenedUrlEntity() {
         var shortenedUrlEntity = new ShortenedUrlEntity();
         var urlEntity = new UrlEntity();
-        urlEntity.setValue(ROOT);
+        urlEntity.setRootValue(ROOT);
         shortenedUrlEntity.setId(BigInteger.valueOf(9999999999L));
         shortenedUrlEntity.setRoot(urlEntity);
         return shortenedUrlEntity;

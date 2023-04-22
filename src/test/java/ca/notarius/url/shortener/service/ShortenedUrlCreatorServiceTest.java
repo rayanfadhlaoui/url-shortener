@@ -34,7 +34,7 @@ class ShortenedUrlCreatorServiceTest {
         var shortenedUrlEntity = shortenedUrlCreatorService.create(new URL(ORIGINAL_URL));
 
         var root = shortenedUrlEntity.getRoot();
-        assertThat(root.getValue()).isEqualTo(DOMAIN);
+        assertThat(root.getRootValue()).isEqualTo(DOMAIN);
 
         assertThat(shortenedUrlEntity.getOriginalPath()).isEqualTo(CAREER_PATH);
         assertThat(shortenedUrlEntity.getId()).isEqualTo(nextKey);

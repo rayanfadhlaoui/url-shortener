@@ -1,5 +1,6 @@
 package ca.notarius.url.shortener.adapter.database;
 
+import ca.notarius.url.shortener.adapter.database.jpa.UrlShortenerDatabaseRepository;
 import ca.notarius.url.shortener.model.ShortenedUrlEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

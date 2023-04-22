@@ -1,4 +1,4 @@
-package ca.notarius.url.shortener.adapter.database;
+package ca.notarius.url.shortener.adapter.database.jpa;
 
 import ca.notarius.url.shortener.model.ShortenedUrlEntity;
 import ca.notarius.url.shortener.model.UrlEntity;

@@ -1,6 +1,7 @@
 package ca.notarius.url.shortener.adapter.database;
 
 import ca.notarius.url.shortener.adapter.UrlShortenerAdapter;
+import ca.notarius.url.shortener.adapter.database.jpa.UrlShortenerDatabaseRepository;
 import ca.notarius.url.shortener.model.ShortenedUrlEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "shortened_url")
+@Getter
+@Setter
 public class ShortenedUrlEntity {
 
     @Id

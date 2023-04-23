@@ -23,12 +23,12 @@ public class ShortenedUrlController {
     public @ResponseBody ResponseEntity<String> shortenedUrl(@RequestBody String url) {
         ResponseEntity<String> responseEntity;
         try {
-            URL formattedUrl = new URL(url);
+            URL formattedUrl = getNormalUrl(url);
             String shortenedUrl = shortenerUrlService.createAndSaveUrl(formattedUrl);
             responseEntity = ResponseEntity.ok(shortenedUrl);
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException | InvalidPathException e) {
             log.warn("Url {} was malformed. {}", url, e.getMessage());
-            responseEntity = ResponseEntity.badRequest().body("Url was malformed");
+            responseEntity = ResponseEntity.badRequest().body("Url was malformed or path was missing");
         }
 
         return responseEntity;
@@ -38,7 +38,7 @@ public class ShortenedUrlController {
     public ResponseEntity<String> fullUrl(@RequestBody String shortenedUrl) {
         ResponseEntity<String> responseEntity;
         try {
-            URL formattedUrl = getUrl(shortenedUrl);
+            URL formattedUrl = getShortenedUrl(shortenedUrl);
             responseEntity = getFullUrlFromFormatted(formattedUrl);
         } catch (MalformedURLException | InvalidPathException e) {
             log.warn("Url {} was invalid. {}", shortenedUrl, e.getMessage());
@@ -48,10 +48,18 @@ public class ShortenedUrlController {
         return responseEntity;
     }
 
-    private URL getUrl(String shortenedUrl) throws MalformedURLException, InvalidPathException {
+    private URL getShortenedUrl(String shortenedUrl) throws MalformedURLException, InvalidPathException {
         URL formattedUrl = new URL(shortenedUrl);
         if (!getPathWithoutDash(formattedUrl).matches("[0-9]+")) {
             throw new InvalidPathException("Url was not shortened by this service.");
+        }
+        return formattedUrl;
+    }
+
+    private URL getNormalUrl(String url) throws MalformedURLException, InvalidPathException {
+        URL formattedUrl = new URL(url);
+        if (getPathWithoutDash(formattedUrl).isEmpty()) {
+            throw new InvalidPathException("Url path is missing.");
         }
         return formattedUrl;
     }

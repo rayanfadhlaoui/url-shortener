@@ -22,6 +22,7 @@ class ShortenedUrlControllerTest {
 
     private static final String VALID_URL = "https://www.notarius.com/careers/softwareEngineer";
     private static final String INVALID_URL = "httpswww.notarius.com/careers/softwareEngineer";
+    private static final String URL_WITH_MISSING_PATH = "https://www.notarius.com/";
     public static final String SHORTENED_URL = "https://www.notarius.com/1";
     @InjectMocks
     private ShortenedUrlController shortenedUrlController;
@@ -45,7 +46,15 @@ class ShortenedUrlControllerTest {
         ResponseEntity<String> responseEntity = shortenedUrlController.shortenedUrl(INVALID_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(responseEntity.getBody()).isEqualTo("Url was malformed");
+        assertThat(responseEntity.getBody()).isEqualTo("Url was malformed or path was missing");
+    }
+
+    @Test
+    void shortenedUrl_missingPath() {
+        ResponseEntity<String> responseEntity = shortenedUrlController.shortenedUrl(URL_WITH_MISSING_PATH);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(responseEntity.getBody()).isEqualTo("Url was malformed or path was missing");
     }
 
     @Test

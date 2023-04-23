@@ -29,7 +29,6 @@ public class UrlShortenedSuccessStepDefinitions extends AbstractStepDefinition {
         currentAction = postUrl(url);
     }
 
-
     @When("retrieving the original url back from {string}")
     public void retrievingTheOriginalUrlBackFrom(String shortenedUrl) throws Exception {
         currentAction = getFullUrl(shortenedUrl);

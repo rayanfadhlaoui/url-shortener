@@ -8,3 +8,11 @@ Feature: Shorten an url
     When retrieving the original url back from "www.notarius.com/1"
     Then it should be fail with bad request
 
+  Scenario: Post url without path
+    When we create a shortened url for "https://www.notarius.com/"
+    Then it should be fail with bad request
+
+  Scenario: Post url without path
+    When we create a shortened url for "www.notarius.com/careers"
+    Then it should be fail with bad request
+

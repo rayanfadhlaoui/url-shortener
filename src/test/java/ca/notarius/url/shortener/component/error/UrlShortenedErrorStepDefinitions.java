@@ -31,7 +31,6 @@ public class UrlShortenedErrorStepDefinitions extends AbstractStepDefinition {
     @When("retrieving the original url back from {string}")
     public void retrievingTheOriginalUrlBackFrom(String shortenedUrl) throws Exception {
         currentAction = getFullUrl(shortenedUrl);
-
     }
 
     @Then("it should be {string}")

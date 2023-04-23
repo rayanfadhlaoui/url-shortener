@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The domain
+ */
 @Entity
 @Table(name = "url")
 @Getter
@@ -13,5 +16,8 @@ public class UrlEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    /**
+     * The domain value.
+     */
     private String rootValue;
 }

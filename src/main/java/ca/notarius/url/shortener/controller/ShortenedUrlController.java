@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @AllArgsConstructor
@@ -34,11 +36,12 @@ public class ShortenedUrlController {
         return responseEntity;
     }
 
-    @GetMapping("/fullUrl")
-    public ResponseEntity<String> fullUrl(@RequestBody String shortenedUrl) {
+    @GetMapping("/fullUrl/{shortenedUrl}")
+    public ResponseEntity<String> fullUrl(@PathVariable String shortenedUrl) {
         ResponseEntity<String> responseEntity;
         try {
-            URL formattedUrl = getShortenedUrl(shortenedUrl);
+            String decodedUrl = URLDecoder.decode(shortenedUrl, StandardCharsets.UTF_8);
+            URL formattedUrl = getShortenedUrl(decodedUrl);
             responseEntity = getFullUrlFromFormatted(formattedUrl);
         } catch (MalformedURLException | InvalidPathException e) {
             log.warn("Url {} was invalid. {}", shortenedUrl, e.getMessage());

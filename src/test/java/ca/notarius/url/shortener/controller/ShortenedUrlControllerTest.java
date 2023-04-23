@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +25,8 @@ class ShortenedUrlControllerTest {
     private static final String VALID_URL = "https://www.notarius.com/careers/softwareEngineer";
     private static final String INVALID_URL = "httpswww.notarius.com/careers/softwareEngineer";
     private static final String URL_WITH_MISSING_PATH = "https://www.notarius.com/";
-    public static final String SHORTENED_URL = "https://www.notarius.com/1";
+    private static final String SHORTENED_URL = "https://www.notarius.com/1";
+    private static final String ENCODE_URL = URLEncoder.encode(SHORTENED_URL, StandardCharsets.UTF_8);
     @InjectMocks
     private ShortenedUrlController shortenedUrlController;
 
@@ -63,6 +66,17 @@ class ShortenedUrlControllerTest {
         mockGetDomain();
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(SHORTENED_URL);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isEqualTo(VALID_URL);
+    }
+
+    @Test
+    void fullUrl_WithEncodedPath() throws MalformedURLException {
+        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
+        mockGetDomain();
+        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
+        ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(ENCODE_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo(VALID_URL);

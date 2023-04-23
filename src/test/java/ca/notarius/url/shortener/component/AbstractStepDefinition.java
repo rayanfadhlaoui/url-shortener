@@ -5,6 +5,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -17,10 +20,11 @@ public class AbstractStepDefinition {
     }
 
     protected ResultActions getFullUrl(String shortenedUrl) throws Exception {
-        MockHttpServletRequestBuilder postBuilder = get("/fullUrl")
+        String encodedUrl = URLEncoder.encode(shortenedUrl, StandardCharsets.UTF_8);
+
+        MockHttpServletRequestBuilder postBuilder = get("/fullUrl/{shortenedUrl}", encodedUrl)
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(shortenedUrl);
+                .contentType(MediaType.APPLICATION_JSON);
         return mvc.perform(postBuilder);
     }
 

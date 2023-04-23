@@ -2,6 +2,7 @@ package ca.notarius.url.shortener.controller;
 
 import ca.notarius.url.shortener.exceptions.InvalidPathException;
 import ca.notarius.url.shortener.service.ShortenerUrlService;
+import ca.notarius.url.shortener.stringifier.UrlStringifier;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,8 @@ import java.net.URL;
 @Slf4j
 public class ShortenedUrlController {
 
-    private static final String PROTOCOL_SEPARATOR = "://";
-
     private final ShortenerUrlService shortenerUrlService;
+    private final UrlStringifier urlStringifier;
 
     @PostMapping("/shortenedUrl")
     public ResponseEntity<String> shortenedUrl(@RequestBody String url) {
@@ -60,7 +60,7 @@ public class ShortenedUrlController {
     }
 
     private ResponseEntity<String> getFullUrlFromFormatted(URL formattedUrl) {
-        String domain = formattedUrl.getProtocol() + PROTOCOL_SEPARATOR + formattedUrl.getHost();
+        String domain = urlStringifier.getDomain(formattedUrl);
         return shortenerUrlService.getFullUrl(domain, getPathWithoutDash(formattedUrl))
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

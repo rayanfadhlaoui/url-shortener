@@ -1,6 +1,7 @@
 package ca.notarius.url.shortener.controller;
 
 import ca.notarius.url.shortener.service.ShortenerUrlService;
+import ca.notarius.url.shortener.stringifier.UrlStringifier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,6 +28,8 @@ class ShortenedUrlControllerTest {
 
     @Mock
     private ShortenerUrlService shortenerUrlService;
+    @Mock
+    private UrlStringifier urlStringifier;
 
     @Test
     void shortenedUrl() throws MalformedURLException {
@@ -46,7 +49,9 @@ class ShortenedUrlControllerTest {
     }
 
     @Test
-    void fullUrl() {
+    void fullUrl() throws MalformedURLException {
+        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
+        mockGetDomain();
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(SHORTENED_URL);
 
@@ -55,8 +60,9 @@ class ShortenedUrlControllerTest {
     }
 
     @Test
-    void fullUrl_NotFound() {
+    void fullUrl_NotFound() throws MalformedURLException {
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.empty());
+        mockGetDomain();
         ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(SHORTENED_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -77,5 +83,10 @@ class ShortenedUrlControllerTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(responseEntity.getBody()).isEqualTo("Url was not shortened by this service.");
+    }
+
+    private void mockGetDomain() throws MalformedURLException {
+        URL url = new URL(SHORTENED_URL);
+        given(urlStringifier.getDomain(url)).willReturn("https://www.notarius.com");
     }
 }

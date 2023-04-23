@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -19,10 +21,17 @@ class UrlStringifierTest {
     private UrlStringifier urlStringifier;
 
     @Test
-    void stringify() {
+    void getShortUrl() {
         var urlEntity = createShortenedUrlEntity();
         String shortUrl = urlStringifier.getShortUrl(urlEntity);
         assertThat(shortUrl).isEqualTo("https://www.notarius.com/9999999999");
+    }
+
+    @Test
+    void getDomain() throws MalformedURLException {
+        URL url = new URL("https://www.notarius.com/9999999999");
+        String domain = urlStringifier.getDomain(url);
+        assertThat(domain).isEqualTo("https://www.notarius.com");
     }
 
     private ShortenedUrlEntity createShortenedUrlEntity() {

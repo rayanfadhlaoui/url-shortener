@@ -1,6 +1,7 @@
 package ca.notarius.url.shortener.service;
 
 import ca.notarius.url.shortener.service.key.UrlKeyProviderService;
+import ca.notarius.url.shortener.stringifier.UrlStringifier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,13 +26,17 @@ class ShortenedUrlCreatorServiceTest {
 
     @Mock
     private UrlKeyProviderService urlKeyProviderService;
+    @Mock
+    private UrlStringifier urlStringifier;
 
     @Test
     void create() throws MalformedURLException {
+        URL url = new URL(ORIGINAL_URL);
         BigInteger nextKey = BigInteger.valueOf(156);
+        given(urlStringifier.getDomain(url)).willReturn(DOMAIN);
         given(urlKeyProviderService.get(DOMAIN, CAREER_PATH)).willReturn(nextKey);
 
-        var shortenedUrlEntity = shortenedUrlCreatorService.create(new URL(ORIGINAL_URL));
+        var shortenedUrlEntity = shortenedUrlCreatorService.create(url);
 
         var root = shortenedUrlEntity.getRoot();
         assertThat(root.getRootValue()).isEqualTo(DOMAIN);

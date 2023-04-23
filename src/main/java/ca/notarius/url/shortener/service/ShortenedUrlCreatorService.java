@@ -3,6 +3,7 @@ package ca.notarius.url.shortener.service;
 import ca.notarius.url.shortener.model.ShortenedUrlEntity;
 import ca.notarius.url.shortener.model.UrlEntity;
 import ca.notarius.url.shortener.service.key.UrlKeyProviderService;
+import ca.notarius.url.shortener.stringifier.UrlStringifier;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,11 @@ import java.net.URL;
 @AllArgsConstructor
 public class ShortenedUrlCreatorService {
 
-    private static final String PROTOCOL_SEPARATOR = "://";
-
     private final UrlKeyProviderService urlKeyProviderService;
+    private final UrlStringifier urlStringifier;
 
     public ShortenedUrlEntity create(URL url) {
-        String domain = url.getProtocol() + PROTOCOL_SEPARATOR + url.getHost();
+        String domain = urlStringifier.getDomain(url);
         BigInteger nextKey = urlKeyProviderService.get(domain, url.getPath());
         return createShortenedUrlEntity(url, domain, nextKey);
     }

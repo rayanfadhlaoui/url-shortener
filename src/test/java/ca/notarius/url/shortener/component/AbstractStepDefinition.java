@@ -19,10 +19,10 @@ public class AbstractStepDefinition {
         this.mvc = mvc;
     }
 
-    protected ResultActions getFullUrl(String shortenedUrl) throws Exception {
+    protected ResultActions originalUrl(String shortenedUrl) throws Exception {
         String encodedUrl = URLEncoder.encode(shortenedUrl, StandardCharsets.UTF_8);
 
-        MockHttpServletRequestBuilder postBuilder = get("/fullUrl/{shortenedUrl}", encodedUrl)
+        MockHttpServletRequestBuilder postBuilder = get("/originalUrl/{shortenedUrl}", encodedUrl)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
         return mvc.perform(postBuilder);

@@ -38,7 +38,7 @@ class ShortenedUrlControllerTest {
     @Test
     void shortenedUrl() throws MalformedURLException {
         given(shortenerUrlService.createAndSaveUrl(new URL(VALID_URL))).willReturn(SHORTENED_URL);
-        ResponseEntity<String> responseEntity = shortenedUrlController.shortenedUrl(VALID_URL);
+        ResponseEntity<String> responseEntity = shortenedUrlController.shortenUrl(VALID_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo(SHORTENED_URL);
@@ -46,7 +46,7 @@ class ShortenedUrlControllerTest {
 
     @Test
     void shortenedUrl_MalformedURL() {
-        ResponseEntity<String> responseEntity = shortenedUrlController.shortenedUrl(INVALID_URL);
+        ResponseEntity<String> responseEntity = shortenedUrlController.shortenUrl(INVALID_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(responseEntity.getBody()).isEqualTo("Url was malformed or path was missing");
@@ -54,55 +54,55 @@ class ShortenedUrlControllerTest {
 
     @Test
     void shortenedUrl_missingPath() {
-        ResponseEntity<String> responseEntity = shortenedUrlController.shortenedUrl(URL_WITH_MISSING_PATH);
+        ResponseEntity<String> responseEntity = shortenedUrlController.shortenUrl(URL_WITH_MISSING_PATH);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(responseEntity.getBody()).isEqualTo("Url was malformed or path was missing");
     }
 
     @Test
-    void fullUrl() throws MalformedURLException {
+    void originalUrl() throws MalformedURLException {
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         mockGetDomain();
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
-        ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(SHORTENED_URL);
+        ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(SHORTENED_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo(VALID_URL);
     }
 
     @Test
-    void fullUrl_WithEncodedPath() throws MalformedURLException {
+    void originalUrl_WithEncodedPath() throws MalformedURLException {
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         mockGetDomain();
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
-        ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(ENCODE_URL);
+        ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(ENCODE_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo(VALID_URL);
     }
 
     @Test
-    void fullUrl_NotFound() throws MalformedURLException {
+    void originalUrl_NotFound() throws MalformedURLException {
         given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.empty());
         mockGetDomain();
-        ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(SHORTENED_URL);
+        ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(SHORTENED_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(responseEntity.getBody()).isNull();
     }
 
     @Test
-    void fullUrl_MalformedURL() {
-        ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(INVALID_URL);
+    void originalUrl_MalformedURL() {
+        ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(INVALID_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(responseEntity.getBody()).isEqualTo("no protocol: httpswww.notarius.com/careers/softwareEngineer");
     }
 
     @Test
-    void fullUrl_IsNotAShortenedUrl() {
-        ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(VALID_URL);
+    void originalUrl_IsNotAShortenedUrl() {
+        ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(VALID_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(responseEntity.getBody()).isEqualTo("Url was not shortened by this service.");

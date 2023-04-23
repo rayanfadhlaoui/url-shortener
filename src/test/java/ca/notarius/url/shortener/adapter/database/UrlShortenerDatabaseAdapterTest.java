@@ -42,7 +42,7 @@ class UrlShortenerDatabaseAdapterTest {
     @Test
     void findByDomainAndPath() {
         given(urlShortenerDatabaseRepository.findByDomainAndPath(DOMAIN, PATH)).willReturn(Optional.of(KEY));
-        Optional<BigInteger> optionalKey = urlShortenerDatabaseAdapter.findByDomainAndPath(DOMAIN, PATH);
+        Optional<BigInteger> optionalKey = urlShortenerDatabaseAdapter.findKeyByDomainAndPath(DOMAIN, PATH);
 
         assertThat(optionalKey.isPresent()).isTrue();
         assertThat(optionalKey.get()).isEqualTo(KEY);

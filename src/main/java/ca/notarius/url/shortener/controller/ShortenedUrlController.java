@@ -21,8 +21,14 @@ public class ShortenedUrlController {
     private final ShortenerUrlService shortenerUrlService;
     private final UrlStringifier urlStringifier;
 
+    /**
+     * Shorten the given url and create a permanent mapping between the original and the shorter version.
+     *
+     * @param url A valid url (https://www.notarius.com/careers)
+     * @return a shorter url with a path of a maximum size of 10.
+     */
     @PostMapping("/shortenedUrl")
-    public @ResponseBody ResponseEntity<String> shortenedUrl(@RequestBody String url) {
+    public @ResponseBody ResponseEntity<String> shortenUrl(@RequestBody String url) {
         ResponseEntity<String> responseEntity;
         try {
             URL formattedUrl = getNormalUrl(url);
@@ -36,8 +42,14 @@ public class ShortenedUrlController {
         return responseEntity;
     }
 
-    @GetMapping("/fullUrl/{shortenedUrl}")
-    public ResponseEntity<String> fullUrl(@PathVariable String shortenedUrl) {
+    /**
+     * Return the original url of a given shortened url.
+     *
+     * @param shortenedUrl the shortened url.
+     * @return the original url.
+     */
+    @GetMapping("/originalUrl/{shortenedUrl}")
+    public ResponseEntity<String> getOriginalUrl(@PathVariable String shortenedUrl) {
         ResponseEntity<String> responseEntity;
         try {
             String decodedUrl = URLDecoder.decode(shortenedUrl, StandardCharsets.UTF_8);

@@ -32,7 +32,7 @@ class UrlKeyProviderServiceTest {
 
     @Test
     void getAndIncrement_keyDoesNotExist() {
-        given(urlShortenerAdapter.findByDomainAndPath(DOMAIN, CAREERS_PATH)).willReturn(Optional.empty());
+        given(urlShortenerAdapter.findKeyByDomainAndPath(DOMAIN, CAREERS_PATH)).willReturn(Optional.empty());
         given(keyGeneratorService.getNextAndIncrement(DOMAIN)).willReturn(BigInteger.ONE);
         BigInteger newKey = urlKeyProviderService.get(DOMAIN, CAREERS_PATH);
         assertThat(newKey).isEqualTo(BigInteger.ONE);
@@ -40,7 +40,7 @@ class UrlKeyProviderServiceTest {
 
     @Test
     void getAndIncrement_keyDoesExist() {
-        given(urlShortenerAdapter.findByDomainAndPath(DOMAIN, CAREERS_PATH)).willReturn(Optional.of(EXISTING_KEY));
+        given(urlShortenerAdapter.findKeyByDomainAndPath(DOMAIN, CAREERS_PATH)).willReturn(Optional.of(EXISTING_KEY));
         BigInteger newKey = urlKeyProviderService.get(DOMAIN, CAREERS_PATH);
         verify(keyGeneratorService, never()).getNextAndIncrement(DOMAIN);
         assertThat(newKey).isEqualTo(EXISTING_KEY);

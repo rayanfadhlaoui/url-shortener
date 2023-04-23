@@ -21,7 +21,7 @@ public class UrlShortenerDatabaseAdapter implements UrlShortenerAdapter {
     }
 
     @Override
-    public Optional<BigInteger> findByDomainAndPath(String domain, String path) {
+    public Optional<BigInteger> findKeyByDomainAndPath(String domain, String path) {
         return urlShortenerDatabaseRepository.findByDomainAndPath(domain, path);
     }
 

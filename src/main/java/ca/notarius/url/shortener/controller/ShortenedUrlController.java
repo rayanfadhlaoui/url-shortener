@@ -81,7 +81,7 @@ public class ShortenedUrlController {
 
     private ResponseEntity<String> getFullUrlFromFormatted(URL formattedUrl) {
         String domain = urlStringifier.getDomain(formattedUrl);
-        return shortenerUrlService.getFullUrl(domain, getPathWithoutDash(formattedUrl))
+        return shortenerUrlService.getOriginalUrl(domain, getPathWithoutDash(formattedUrl))
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

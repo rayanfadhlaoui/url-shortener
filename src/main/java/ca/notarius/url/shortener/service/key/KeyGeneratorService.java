@@ -16,6 +16,12 @@ public class KeyGeneratorService {
 
     private KeyGeneratorAdapter keyGeneratorAdapter;
 
+    /**
+     * Get and increment the key of a given domain.
+     *
+     * @param domain the domain.
+     * @return the current key linked to the domain. If none exist, return 1.
+     */
     @Transactional
     public BigInteger getNextAndIncrement(String domain) {
         BigInteger currentKey = keyGeneratorAdapter.getCurrent(domain)

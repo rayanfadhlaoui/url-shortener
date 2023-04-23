@@ -51,20 +51,20 @@ class ShortenerUrlServiceTest {
     }
 
     @Test
-    void getFullUrl() {
+    void getOriginalUrl() {
         given(urlShortenerAdapter.findPathByDomainAndKey(DOMAIN, BigInteger.valueOf(5415561L))).willReturn(Optional.of("/career"));
 
-        Optional<String> actualUrl = shortenerUrlService.getFullUrl(DOMAIN, KEY);
+        Optional<String> actualUrl = shortenerUrlService.getOriginalUrl(DOMAIN, KEY);
 
         assertThat(actualUrl.isPresent()).isTrue();
         assertThat(actualUrl.get()).isEqualTo(ORIGINAL_URL);
     }
 
     @Test
-    void getFullUrl_NotPresent() {
+    void getOriginalUrl_NotPresent() {
         given(urlShortenerAdapter.findPathByDomainAndKey(DOMAIN, BigInteger.valueOf(5415561L))).willReturn(Optional.empty());
 
-        Optional<String> actualUrl = shortenerUrlService.getFullUrl(DOMAIN, KEY);
+        Optional<String> actualUrl = shortenerUrlService.getOriginalUrl(DOMAIN, KEY);
 
         assertThat(actualUrl.isEmpty()).isTrue();
     }

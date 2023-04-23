@@ -62,9 +62,9 @@ class ShortenedUrlControllerTest {
 
     @Test
     void originalUrl() throws MalformedURLException {
-        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
+        given(shortenerUrlService.getOriginalUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         mockGetDomain();
-        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
+        given(shortenerUrlService.getOriginalUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(SHORTENED_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -73,9 +73,9 @@ class ShortenedUrlControllerTest {
 
     @Test
     void originalUrl_WithEncodedPath() throws MalformedURLException {
-        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
+        given(shortenerUrlService.getOriginalUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         mockGetDomain();
-        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
+        given(shortenerUrlService.getOriginalUrl("https://www.notarius.com", "1")).willReturn(Optional.of(VALID_URL));
         ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(ENCODE_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -84,7 +84,7 @@ class ShortenedUrlControllerTest {
 
     @Test
     void originalUrl_NotFound() throws MalformedURLException {
-        given(shortenerUrlService.getFullUrl("https://www.notarius.com", "1")).willReturn(Optional.empty());
+        given(shortenerUrlService.getOriginalUrl("https://www.notarius.com", "1")).willReturn(Optional.empty());
         mockGetDomain();
         ResponseEntity<String> responseEntity = shortenedUrlController.getOriginalUrl(SHORTENED_URL);
 

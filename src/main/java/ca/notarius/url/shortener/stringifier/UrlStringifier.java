@@ -12,7 +12,7 @@ public class UrlStringifier {
     private static final String PROTOCOL_SEPARATOR = "://";
 
     public String getShortUrl(ShortenedUrlEntity shortenedUrlEntity) {
-        return shortenedUrlEntity.getRoot().getRootValue() + DOMAIN_SEPARATOR + shortenedUrlEntity.getPathKey();
+        return shortenedUrlEntity.getDomain().getDomainValue() + DOMAIN_SEPARATOR + shortenedUrlEntity.getPathKey();
     }
 
     public String getDomain(URL url) {

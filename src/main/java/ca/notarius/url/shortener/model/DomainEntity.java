@@ -11,7 +11,7 @@ import lombok.Setter;
 @Table(name = "url")
 @Getter
 @Setter
-public class UrlEntity {
+public class DomainEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -19,5 +19,5 @@ public class UrlEntity {
     /**
      * The domain value.
      */
-    private String rootValue;
+    private String domainValue;
 }

@@ -1,7 +1,7 @@
 package ca.notarius.url.shortener.adapter.database.jpa;
 
 import ca.notarius.url.shortener.model.ShortenedUrlEntity;
-import ca.notarius.url.shortener.model.UrlEntity;
+import ca.notarius.url.shortener.model.DomainEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -71,9 +71,9 @@ class UrlShortenerDatabaseRepositoryJpaTest {
 
     private static ShortenedUrlEntity createShortenedUrlEntity() {
         var shortenedUrlEntity = new ShortenedUrlEntity();
-        var urlEntity = new UrlEntity();
-        urlEntity.setRootValue(DOMAIN);
-        shortenedUrlEntity.setRoot(urlEntity);
+        var domainEntity = new DomainEntity();
+        domainEntity.setDomainValue(DOMAIN);
+        shortenedUrlEntity.setDomain(domainEntity);
         shortenedUrlEntity.setOriginalPath(PATH);
         shortenedUrlEntity.setPathKey(EXPECTED_KEY);
         return shortenedUrlEntity;

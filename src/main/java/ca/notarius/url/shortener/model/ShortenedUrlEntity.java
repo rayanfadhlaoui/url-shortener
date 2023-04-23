@@ -36,7 +36,7 @@ public class ShortenedUrlEntity {
      * The domain.
      */
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "root_id", referencedColumnName = "id")
-    private UrlEntity root;
+    @JoinColumn(name = "domain_id", referencedColumnName = "id")
+    private DomainEntity domain;
 
 }

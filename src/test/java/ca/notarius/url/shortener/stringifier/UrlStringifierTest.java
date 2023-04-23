@@ -1,7 +1,7 @@
 package ca.notarius.url.shortener.stringifier;
 
 import ca.notarius.url.shortener.model.ShortenedUrlEntity;
-import ca.notarius.url.shortener.model.UrlEntity;
+import ca.notarius.url.shortener.model.DomainEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,10 +36,10 @@ class UrlStringifierTest {
 
     private ShortenedUrlEntity createShortenedUrlEntity() {
         var shortenedUrlEntity = new ShortenedUrlEntity();
-        var urlEntity = new UrlEntity();
-        urlEntity.setRootValue(ROOT);
+        var domainEntity = new DomainEntity();
+        domainEntity.setDomainValue(ROOT);
         shortenedUrlEntity.setPathKey(BigInteger.valueOf(9999999999L));
-        shortenedUrlEntity.setRoot(urlEntity);
+        shortenedUrlEntity.setDomain(domainEntity);
         return shortenedUrlEntity;
     }
 

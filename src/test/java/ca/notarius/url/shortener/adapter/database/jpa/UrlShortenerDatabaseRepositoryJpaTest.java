@@ -46,6 +46,29 @@ class UrlShortenerDatabaseRepositoryJpaTest {
         assertThat(optionalKey.isEmpty()).isTrue();
     }
 
+    @Test
+    void findPathByDomainAndKey() {
+        var shortenedUrlEntity = createShortenedUrlEntity();
+
+        urlShortenerDatabaseRepository.save(shortenedUrlEntity);
+
+        Optional<String> optionalPath = urlShortenerDatabaseRepository.findPathByDomainAndKey(DOMAIN, EXPECTED_KEY);
+
+        assertThat(optionalPath.isPresent()).isTrue();
+        assertThat(optionalPath.get()).isEqualTo(PATH);
+    }
+
+    @Test
+    void findPathByDomainAndKey_NoMatch() {
+        var shortenedUrlEntity = createShortenedUrlEntity();
+
+        urlShortenerDatabaseRepository.save(shortenedUrlEntity);
+
+        Optional<String> optionalPath = urlShortenerDatabaseRepository.findPathByDomainAndKey(DOMAIN, BigInteger.ZERO);
+
+        assertThat(optionalPath.isEmpty()).isTrue();
+    }
+
     private static ShortenedUrlEntity createShortenedUrlEntity() {
         var shortenedUrlEntity = new ShortenedUrlEntity();
         var urlEntity = new UrlEntity();

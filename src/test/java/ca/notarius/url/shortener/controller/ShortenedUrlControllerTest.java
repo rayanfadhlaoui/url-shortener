@@ -68,6 +68,14 @@ class ShortenedUrlControllerTest {
         ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(INVALID_URL);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(responseEntity.getBody()).isEqualTo("Url was malformed");
+        assertThat(responseEntity.getBody()).isEqualTo("no protocol: httpswww.notarius.com/careers/softwareEngineer");
+    }
+
+    @Test
+    void fullUrl_IsNotAShortenedUrl() {
+        ResponseEntity<String> responseEntity = shortenedUrlController.fullUrl(VALID_URL);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(responseEntity.getBody()).isEqualTo("Url was not shortened by this service.");
     }
 }

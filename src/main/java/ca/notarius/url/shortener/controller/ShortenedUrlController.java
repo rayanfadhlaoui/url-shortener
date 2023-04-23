@@ -1,5 +1,6 @@
 package ca.notarius.url.shortener.controller;
 
+import ca.notarius.url.shortener.exceptions.InvalidPathException;
 import ca.notarius.url.shortener.service.ShortenerUrlService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,21 +41,32 @@ public class ShortenedUrlController {
     public ResponseEntity<String> fullUrl(@RequestBody String shortenedUrl) {
         ResponseEntity<String> responseEntity;
         try {
-            URL formattedUrl = new URL(shortenedUrl);
+            URL formattedUrl = getUrl(shortenedUrl);
             responseEntity = getFullUrlFromFormatted(formattedUrl);
-        } catch (MalformedURLException e) {
-            log.warn("Url {} was malformed. {}", shortenedUrl, e.getMessage());
-            responseEntity = ResponseEntity.badRequest().body("Url was malformed");
+        } catch (MalformedURLException | InvalidPathException e) {
+            log.warn("Url {} was invalid. {}", shortenedUrl, e.getMessage());
+            responseEntity = ResponseEntity.badRequest().body(e.getMessage());
         }
 
         return responseEntity;
     }
 
+    private URL getUrl(String shortenedUrl) throws MalformedURLException, InvalidPathException {
+        URL formattedUrl = new URL(shortenedUrl);
+        if (!getPathWithoutDash(formattedUrl).matches("[0-9]+")) {
+            throw new InvalidPathException("Url was not shortened by this service.");
+        }
+        return formattedUrl;
+    }
+
     private ResponseEntity<String> getFullUrlFromFormatted(URL formattedUrl) {
         String domain = formattedUrl.getProtocol() + PROTOCOL_SEPARATOR + formattedUrl.getHost();
-        String pathWithoutLeadingSlash = formattedUrl.getPath().substring(1);
-        return shortenerUrlService.getFullUrl(domain, pathWithoutLeadingSlash)
+        return shortenerUrlService.getFullUrl(domain, getPathWithoutDash(formattedUrl))
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    private String getPathWithoutDash(URL formattedUrl) {
+        return formattedUrl.getPath().substring(1);
     }
 }

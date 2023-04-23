@@ -5,6 +5,7 @@ import ca.notarius.url.shortener.stringifier.UrlStringifier;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.net.URL;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public class ShortenerUrlService {
     }
 
     public Optional<String> getFullUrl(String domain, String key) {
-        return null;
+        BigInteger keyAsBigInt = new BigInteger(key);
+        return urlShortenerAdapter.findPathByDomainAndKey(domain, keyAsBigInt)
+                .map(path -> domain + path);
     }
 }

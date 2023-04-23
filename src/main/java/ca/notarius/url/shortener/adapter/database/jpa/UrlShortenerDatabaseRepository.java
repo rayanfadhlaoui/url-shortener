@@ -15,4 +15,8 @@ public interface UrlShortenerDatabaseRepository extends JpaRepository<ShortenedU
     @Query("SELECT s.id FROM ShortenedUrlEntity s WHERE s.root.rootValue = :domain AND s.originalPath = :path")
     Optional<BigInteger> findByDomainAndPath(@Param(value = "domain") String domain,
                                              @Param(value = "path") String path);
+
+    @Query("SELECT s.originalPath FROM ShortenedUrlEntity s WHERE s.root.rootValue = :domain AND s.id = :key")
+    Optional<String> findPathByDomainAndKey(@Param(value = "domain") String domain,
+                                            @Param(value = "key") BigInteger key);
 }

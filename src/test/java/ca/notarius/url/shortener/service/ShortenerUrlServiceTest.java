@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Optional;
@@ -18,6 +19,8 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ShortenerUrlServiceTest {
+    private static final String DOMAIN = "https://www.notarius.com";
+    private static final String KEY = "5415561";
     private static final String EXPECTED_SHORTENED_URL = "https://www.notarius.com/1";
     private static final String ORIGINAL_URL = "https://www.notarius.com/career";
 
@@ -49,9 +52,20 @@ class ShortenerUrlServiceTest {
 
     @Test
     void getFullUrl() {
-        //todo Not yet implemented
-        Optional<String> actualUrl = shortenerUrlService.getFullUrl(null, null);
+        given(urlShortenerAdapter.findPathByDomainAndKey(DOMAIN, BigInteger.valueOf(5415561L))).willReturn(Optional.of("/career"));
 
-        assertThat(actualUrl).isNull();
+        Optional<String> actualUrl = shortenerUrlService.getFullUrl(DOMAIN, KEY);
+
+        assertThat(actualUrl.isPresent()).isTrue();
+        assertThat(actualUrl.get()).isEqualTo(ORIGINAL_URL);
+    }
+
+    @Test
+    void getFullUrl_NotPresent() {
+        given(urlShortenerAdapter.findPathByDomainAndKey(DOMAIN, BigInteger.valueOf(5415561L))).willReturn(Optional.empty());
+
+        Optional<String> actualUrl = shortenerUrlService.getFullUrl(DOMAIN, KEY);
+
+        assertThat(actualUrl.isEmpty()).isTrue();
     }
 }

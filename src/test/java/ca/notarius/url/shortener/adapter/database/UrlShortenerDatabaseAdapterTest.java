@@ -47,4 +47,13 @@ class UrlShortenerDatabaseAdapterTest {
         assertThat(optionalKey.isPresent()).isTrue();
         assertThat(optionalKey.get()).isEqualTo(KEY);
     }
+
+    @Test
+    void findPathByDomainAndKey() {
+        given(urlShortenerDatabaseRepository.findPathByDomainAndKey(DOMAIN, KEY)).willReturn(Optional.of(PATH));
+        Optional<String> actualPath = urlShortenerDatabaseAdapter.findPathByDomainAndKey(DOMAIN, KEY);
+
+        assertThat(actualPath.isPresent()).isTrue();
+        assertThat(actualPath.get()).isEqualTo(PATH);
+    }
 }

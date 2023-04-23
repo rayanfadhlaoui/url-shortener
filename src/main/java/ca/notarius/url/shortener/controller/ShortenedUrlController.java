@@ -6,10 +6,7 @@ import ca.notarius.url.shortener.stringifier.UrlStringifier;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +20,7 @@ public class ShortenedUrlController {
     private final UrlStringifier urlStringifier;
 
     @PostMapping("/shortenedUrl")
-    public ResponseEntity<String> shortenedUrl(@RequestBody String url) {
+    public @ResponseBody ResponseEntity<String> shortenedUrl(@RequestBody String url) {
         ResponseEntity<String> responseEntity;
         try {
             URL formattedUrl = new URL(url);

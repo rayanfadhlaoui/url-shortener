@@ -13,7 +13,10 @@ import java.math.BigInteger;
 public class ShortenedUrlEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger id;
+
+    private BigInteger pathKey;
 
     @Column(name = "original_path")
     private String originalPath;

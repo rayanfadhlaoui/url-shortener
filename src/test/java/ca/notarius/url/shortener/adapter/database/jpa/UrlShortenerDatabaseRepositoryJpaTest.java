@@ -75,7 +75,7 @@ class UrlShortenerDatabaseRepositoryJpaTest {
         urlEntity.setRootValue(DOMAIN);
         shortenedUrlEntity.setRoot(urlEntity);
         shortenedUrlEntity.setOriginalPath(PATH);
-        shortenedUrlEntity.setId(EXPECTED_KEY);
+        shortenedUrlEntity.setPathKey(EXPECTED_KEY);
         return shortenedUrlEntity;
     }
 }

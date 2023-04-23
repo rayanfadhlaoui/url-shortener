@@ -42,6 +42,6 @@ class ShortenedUrlCreatorServiceTest {
         assertThat(root.getRootValue()).isEqualTo(DOMAIN);
 
         assertThat(shortenedUrlEntity.getOriginalPath()).isEqualTo(CAREER_PATH);
-        assertThat(shortenedUrlEntity.getId()).isEqualTo(nextKey);
+        assertThat(shortenedUrlEntity.getPathKey()).isEqualTo(nextKey);
     }
 }

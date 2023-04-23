@@ -23,6 +23,7 @@
         <assertj-core.version>3.11.1</assertj-core.version>
         <mockito-core.version>2.21.0</mockito-core.version>
         <h2.version>2.1.214</h2.version>
+        <cucumber-java.version>7.11.2</cucumber-java.version>
 
         <!-- plugin -->
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -105,6 +106,36 @@
             <artifactId>pitest-junit5-plugin</artifactId>
             <version>${pitest-junit5-plugin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber-java.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>${cucumber-java.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber-java.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <version>${cucumber-java.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber-java.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -136,6 +167,9 @@
                                 <param>!${base-package}.Application.*</param>
                                 <param>${base-package}.*</param>
                             </targetTests>
+                            <excludedClasses>
+                                <excludedClass>${base-package}.component.**</excludedClass>
+                            </excludedClasses>
                             <avoidCallsTo>
                                 <avoidCallsTo>java.util.logging</avoidCallsTo>
                                 <avoidCallsTo>org.apache.log4j</avoidCallsTo>

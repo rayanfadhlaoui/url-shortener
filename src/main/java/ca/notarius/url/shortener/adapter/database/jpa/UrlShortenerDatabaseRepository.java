@@ -12,11 +12,11 @@ import java.util.Optional;
 @Repository
 public interface UrlShortenerDatabaseRepository extends JpaRepository<ShortenedUrlEntity, BigInteger> {
 
-    @Query("SELECT s.id FROM ShortenedUrlEntity s WHERE s.root.rootValue = :domain AND s.originalPath = :path")
+    @Query("SELECT s.pathKey FROM ShortenedUrlEntity s WHERE s.root.rootValue = :domain AND s.originalPath = :path")
     Optional<BigInteger> findByDomainAndPath(@Param(value = "domain") String domain,
                                              @Param(value = "path") String path);
 
-    @Query("SELECT s.originalPath FROM ShortenedUrlEntity s WHERE s.root.rootValue = :domain AND s.id = :key")
+    @Query("SELECT s.originalPath FROM ShortenedUrlEntity s WHERE s.root.rootValue = :domain AND s.pathKey = :key")
     Optional<String> findPathByDomainAndKey(@Param(value = "domain") String domain,
                                             @Param(value = "key") BigInteger key);
 }

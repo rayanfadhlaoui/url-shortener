@@ -27,7 +27,7 @@ public class ShortenedUrlCreatorService {
         var shortenedUrlEntity = new ShortenedUrlEntity();
         shortenedUrlEntity.setOriginalPath(url.getPath());
         shortenedUrlEntity.setRoot(createUrlEntity(domain));
-        shortenedUrlEntity.setId(nextKey);
+        shortenedUrlEntity.setPathKey(nextKey);
         return shortenedUrlEntity;
     }
 
